@@ -1,0 +1,38 @@
+from pyspark.sql import SparkSession
+
+# Sample data and schema
+data1 = [(1, 'A', 100, 'IT'),
+         (2, 'B', 200, 'IT'),
+         (3, 'C', 50, 'IT'),
+         (4, 'D', 150, 'Sales'),
+         (5, 'E', 300, 'Sales'),
+         (6, 'F', 100, 'Sales'),
+         (7, 'G', 100, 'HR'),
+         (8, 'H', 100, 'HR'),
+         (9, 'I', 50, 'HR')]
+
+schema = ['empid', 'empname', 'salary', 'dept']
+
+# Create SparkSession
+spark = SparkSession.builder.appName("Highest Salary").getOrCreate()
+
+# Create DataFrame from data
+df = spark.createDataFrame(data1, schema)
+
+# Show the DataFrame content
+df.show()
+
+
+
+from pyspark.sql.functions import *
+from pyspark.sql.window import *
+
+df_rank= df.select('*',
+                   dense_rank().over(Window.partitionBy(df.dept).orderBy(df.salary.desc())).alias("rank")
+                  )
+
+
+df_rank.show()
+
+
+display(df_rank.filter(df_rank.rank==1))
