@@ -1,0 +1,17 @@
+from pyspark.sql import SparkSession
+from pyspark.sql.types import *
+data=[(1,'John','ADF'),(1,'John','ADB'),(1,'John','PowerBI'),(2,'Joanne','ADF'),(2,'Joanne','SQL'),(2,'Joanne','Crystal Report'),(3,'Vikas','ADF'),(3,'Vikas','SQL'),(3,'Vikas','SSIS'),(4,'Monu','SQL'),(4,'Monu','SSIS'),(4,'Monu','SSAS'),(4,'Monu','ADF')]
+schema=["EmpId","EmpName","Skill"]
+spark = SparkSession.builder.appName("Concentination").getOrCreate()
+
+df1=spark.createDataFrame(data,schema)
+df1.show()
+
+
+from pyspark.sql.functions import collect_list, concat_ws
+df2=(df1.groupby(df1.EmpName).agg(collect_list(df1.Skill).alias("Skill")))
+df2.show()
+
+
+df3=df2.select(df2.EmpName,concat_ws(',',df2.Skill).alias("Skills"))
+df3.show()
