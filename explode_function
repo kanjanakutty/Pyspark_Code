@@ -1,0 +1,11 @@
+
+
+from pyspark.sql.functions import split, explode
+
+data=[('Alice', 'badmintion', 'tenis')('bob','tenis')]
+column=['name', 'games']
+
+df=spark.createDataFrame(data,column)
+display(df)
+
+display(df.select(df.name),split(df.hobbies,',')).alias('hobbies'))
