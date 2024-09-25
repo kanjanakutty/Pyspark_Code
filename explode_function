@@ -8,4 +8,4 @@ column=['name', 'games']
 df=spark.createDataFrame(data,column)
 display(df)
 
-display(df.select(df.name),split(df.hobbies,',')).alias('hobbies'))
+display(df.select(df.name, explode (split(df.hobbies,',')).alias('hobbies')))
