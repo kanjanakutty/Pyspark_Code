@@ -3,3 +3,6 @@ column=["city1","city2","city3"]
 
 df=spark.createDataFrame(data,column)
 display(df)
+
+from pyspark.sql.functions import *
+df.withcolumn('firstnotnull',coelesce(df.city1,df.city2,df.city3))
