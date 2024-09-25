@@ -1,0 +1,10 @@
+data1=[(1,"Steve"),(2,"David"),(3,"John"),(4,"Shree"),(5,"Helen")]
+data2=[(1,"SQL",90),(1,"PySpark",100),(2,"SQL",70),(2,"PySpark",60),(3,"SQL",30),(3,"PySpark",20),(4,"SQL",50),(4,"PySpark",50),(5,"SQL",45),(5,"PySpark",45)]
+
+schema1=["Id","Name"]
+schema2=["Id","Subject","Mark"]
+
+df1=spark.createDataFrame(data1,schema1)
+df2=spark.createDataFrame(data2,schema2)
+display(df1)
+display(df2)
