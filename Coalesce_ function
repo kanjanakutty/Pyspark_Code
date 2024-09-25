@@ -1,0 +1,2 @@
+data=[('goa','','AP'),('','AP',None),(None, '','bglr')]
+column=["city1","city2","city3"]
