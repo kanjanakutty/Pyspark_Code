@@ -1,2 +1,5 @@
 data=[('goa','','AP'),('','AP',None),(None, '','bglr')]
 column=["city1","city2","city3"]
+
+df=spark.createDataFrame(data,column)
+display(df)
