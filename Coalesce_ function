@@ -6,3 +6,12 @@ display(df)
 
 from pyspark.sql.functions import *
 df.withcolumn('firstnotnull',coelesce(df.city1,df.city2,df.city3))
+
+
+to check when condition to check each city
+
+from pyspark.sql.functions import *
+df.withcolumn('firstnotnull',coelesce(
+when(df.city1=="",None).otherwise(df.city1),
+when(df.city2=="",None).otherwise(df.city2),
+when(df.city3=="",None).otherwise(df.city3)))
