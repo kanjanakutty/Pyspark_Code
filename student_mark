@@ -8,3 +8,32 @@ df1=spark.createDataFrame(data1,schema1)
 df2=spark.createDataFrame(data2,schema2)
 display(df1)
 display(df2)
+df_join=df1.join(df2,df1.Id==df2.Id).drop(df2.Id)
+display(df_join)
+
+from pyspark.sql.functions import *
+df_per=df_join.groupBy('Id','Name').agg(
+    (sum('Mark')/count('*')).alias('Percentage')
+)
+display(df_per)
+
+
+df_final=df_per.select('*',
+          when(df.percentage>=75, 'Distionction')
+          .when((df.percentage<70) && (df.percentage>=60), 'first class')
+          .when((df.percentage<60) && (df.percentage>=50), 'Second class')
+          .when((df.percentage<50) && (df.percentage>=40), 'Third class')
+          .when(df.percentage<=40, 'Fail')
+
+)
+
+display(df_final)
+
+
+
+
+
+
+
+
+)
