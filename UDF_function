@@ -1,0 +1,13 @@
+#What is a UDF (User Defined Function) in PySpark, and how do you use it?
+
+#UDFs are custom functions that you can define and use to apply transformations to DataFrame column
+
+
+from pyspark.sql.functions import udf
+from pyspark.sql.types import IntegerType
+
+def my_func(x):
+    return x + 1
+
+my_udf = udf(my_func, IntegerType())
+df = df.withColumn('new_column', my_udf(df['column']))
