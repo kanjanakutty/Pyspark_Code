@@ -1,0 +1,36 @@
+/*4. I have the following as input
+Input
+Col 1 Col 2 Col 3
+a aa 1
+a aa 2
+b bb 5
+b bb 3
+b bb 4
+
+Write PySpark code to get following as output
+
+Col 1 Col 2 Col 3
+a aa [1,2]
+b bb [5,3,4] */
+
+
+from pyspark.sql.functions import collect_list
+data = [
+    ("a", "aa", 1),
+    ("a", "aa", 2),
+    ("b", "bb", 5),
+    ("b", "bb", 3),
+    ("b", "bb", 4)
+]
+
+
+input_df = spark.createDataFrame(data, ["Col 1", "Col 2", "Col 3"])
+
+output_df = input_df.groupBy("Col 1", "Col 2").agg(
+    collect_list("Col 3").alias("Col 3")
+)
+
+# Show the resulting DataFrame
+output_df.show(truncate=False)
+
+  
