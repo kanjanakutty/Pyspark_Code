@@ -1,0 +1,73 @@
+ I have the following as input
+
+I have the following as input
+Input
+Name Sport
+Alice Badminton, Tennis
+Greg Cricket, Baseball
+Julie Swimming, Basket ball
+Alan Tennis, Swimming
+Xian Badminton, Baseball
+
+Write PySpark code to get following as output
+Output
+Name Sport
+Alice Badminton
+Xian Badminton
+Alice Tennis
+Alan Tennis
+Greg Baseball
+Xian Baseball
+Julie Swimming
+Alan Swimming
+Greg Cricket
+Julie Basket ball
+
+
+
+from pyspark.sql.functions import col, split, explode, trim
+
+data = [
+    ("Alice", "Badminton, Tennis"),
+    ("Greg", "Cricket, Baseball"),
+    ("Julie", "Swimming, Basketball"),
+    ("Alan", "Tennis, Swimming"),
+    ("Xian", "Badminton, Baseball")
+]
+
+input_df = spark.createDataFrame(data, ["Name", "Sport"])
+
+
+output_df = input_df.withColumn(
+    "Sport",
+    trim(explode(split(col("Sport"), ",")))  # Chain split, explode, and trim
+)
+
+output_df.show()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+from pyspark.sql.functions import explode,trim, collect_list
+data=[Alice Badminton, Tennis
+Greg Cricket, Baseball
+Julie Swimming, Basket ball
+Alan Tennis, Swimming
+Xian Badminton, Baseball]
+
+
+df1 = spark.createDataFrame("Name", "Sport")
+df2 = df1.select("Name", explode("Sport").alias("Sport")).show()
+
+
