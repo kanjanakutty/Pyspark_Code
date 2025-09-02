@@ -1,0 +1,21 @@
+Given two DataFrames employees and departments, join them on dept_id.
+
+df3=df1.join(df2 on='dept_id', how='inner')
+
+Find the top 3 highest-paid employees in each department using a window function.
+
+Windowspec=Window.partionBy('').orderBy('sal').desc())
+df.withcolumn("rank", dense_rank().over(Windowspec)).filter('rank<=3')
+
+Write a PySpark job to calculate word count from a text file.
+df.split('file'," ").alias('word')
+.groupby('word')
+.count()
+
+Remove duplicate rows based on multiple columns.
+df.dropduplicates('name', 'age')
+
+Write DataFrame output into Parquet format, partitioned by a column.
+df_emp.write.mode("overwrite") \
+     .partitionBy("dept_id") \
+     .parquet("path/to/output/employees_parquet")
