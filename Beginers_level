@@ -1,0 +1,25 @@
+Create a DataFrame from a Python list of tuples (id, name, age) and select all rows where age > 25.
+
+df=spark.createDataframe('id', 'name', 'age')
+df1=df.select('*').filter(df.age>25)
+
+
+Read a CSV file into a DataFrame, infer schema, and show the first 5 rows.
+
+df=spark.read.format('csv').option(Header=True).option(InferSchema=True).load('/c/dire/file.csv')
+df.show(5)
+
+Count the number of rows in a DataFrame where a column value is null.
+count(isnull())
+
+Convert a column containing string dates into DateType and extract year and month.
+
+df_dates = df_dates.withColumn("date", to_date(col("date_str"), "yyyy-MM-dd"))
+
+df_dates = df_dates.withColumn("year", year(col("date"))).withColumn("month", month(col("date")))
+df_dates.show()
+
+
+Show how to group data by a column and compute the average of another column.
+
+groupby('name').agg(avg('age')).select('*')
